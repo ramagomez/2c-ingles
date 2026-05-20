@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Unit 2 - 2C</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #4FC3F7;
+    --sun: #FFD54F;
+    --grass: #81C784;
+    --coral: #FF8A65;
+    --purple: #CE93D8;
+    --white: #FFFDE7;
+    --dark: #37474F;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, #E3F2FD 0%, #F3E5F5 50%, #E8F5E9 100%);
+    min-height: 100vh;
+    color: var(--dark);
+  }
+
+  /* NAV TABS */
+  header {
+    background: var(--sky);
+    padding: 16px 20px 0;
+    text-align: center;
+  }
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: white;
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+    margin-bottom: 14px;
+  }
+  .tabs {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .tab {
+    background: rgba(255,255,255,0.25);
+    border: none;
+    border-radius: 14px 14px 0 0;
+    padding: 8px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .tab.active {
+    background: var(--white);
+    color: var(--dark);
+  }
+
+  /* SECTIONS */
+  .section { display: none; padding: 24px 16px; max-width: 700px; margin: 0 auto; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .card h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    color: var(--sky);
+  }
+  .card h3 {
+    font-size: 1rem;
+    font-weight: 900;
+    margin: 12px 0 6px;
+    color: var(--coral);
+  }
+
+  /* VOCAB GRID */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .vocab-item {
+    background: linear-gradient(135deg, #E3F2FD, #EDE7F6);
+    border-radius: 14px;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    border: 2px solid transparent;
+  }
+  .vocab-item:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+  .vocab-item .emoji { font-size: 2rem; display: block; margin-bottom: 6px; }
+  .vocab-item .en { font-weight: 900; font-size: 0.9rem; }
+  .vocab-item .es { font-size: 0.78rem; color: #888; margin-top: 2px; }
+  .vocab-item.flipped { background: linear-gradient(135deg, #FFE0B2, #FFF9C4); border-color: var(--sun); }
+
+  /* GRAMMAR TABLES */
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th {
+    background: var(--sky);
+    color: white;
+    padding: 10px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+  }
+  td { padding: 10px; border-bottom: 1px solid #eee; text-align: center; font-size: 0.95rem; }
+  tr:nth-child(even) td { background: #F8FBFF; }
+  .highlight { background: #FFF9C4 !important; font-weight: 900; color: var(--coral); }
+
+  /* EXAMPLES */
+  .example {
+    background: linear-gradient(135deg, #E8F5E9, #F3E5F5);
+    border-left: 4px solid var(--grass);
+    border-radius: 0 12px 12px 0;
+    padding: 10px 14px;
+    margin: 6px 0;
+    font-size: 0.95rem;
+  }
+  .example span { color: var(--coral); font-weight: 900; }
+
+  /* QUIZ */
+  .quiz-question {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: center;
+  }
+  .quiz-question p.q-text {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: var(--dark);
+    min-height: 50px;
+  }
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .opt-btn {
+    background: #F5F5F5;
+    border: 3px solid #DDD;
+    border-radius: 14px;
+    padding: 14px 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .opt-btn:hover { border-color: var(--sky); background: #E3F2FD; }
+  .opt-btn.correct { background: #E8F5E9; border-color: var(--grass); color: #2E7D32; }
+  .opt-btn.wrong { background: #FFEBEE; border-color: #EF9A9A; color: #C62828; }
+  .feedback {
+    font-size: 1.1rem;
+    font-weight: 900;
+    min-height: 30px;
+    margin-bottom: 10px;
+  }
+  .feedback.ok { color: #2E7D32; }
+  .feedback.no { color: #C62828; }
+  .score-bar {
+    background: #EEE;
+    border-radius: 20px;
+    height: 16px;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+  .score-fill {
+    background: linear-gradient(90deg, var(--grass), var(--sky));
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.4s;
+  }
+  .score-text { font-weight: 700; font-size: 0.9rem; color: #666; margin-bottom: 14px; }
+  .btn {
+    background: linear-gradient(135deg, var(--sky), var(--purple));
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 28px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+  .btn:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+  /* FLASHCARDS */
+  .flashcard-container { perspective: 800px; margin: 20px auto; max-width: 320px; }
+  .flashcard {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    cursor: pointer;
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 900;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  }
+  .card-face.front { background: linear-gradient(135deg, var(--sky), #B3E5FC); color: white; }
+  .card-face.back { background: linear-gradient(135deg, var(--coral), var(--sun)); color: white; transform: rotateY(180deg); }
+  .card-face .big { font-size: 2.2rem; margin-bottom: 8px; }
+  .fc-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+  .fc-nav button { background: var(--purple); color: white; border: none; border-radius: 10px; padding: 8px 16px; font-weight: 900; cursor: pointer; font-size: 1rem; }
+  .fc-count { font-weight: 700; color: #666; }
+
+  /* TIP BOX */
+  .tip {
+    background: linear-gradient(135deg, #FFF9C4, #FFFDE7);
+    border: 2px dashed var(--sun);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 14px;
+    font-size: 0.88rem;
+  }
+  .tip strong { color: var(--coral); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏫 English Unit 2 — 2°C</h1>
+  <div class="tabs">
+    <button class="tab active" onclick="show('vocab')">📚 Vocabulary</button>
+    <button class="tab" onclick="show('grammar')">✏️ Grammar</button>
+    <button class="tab" onclick="show('flashcards')">🃏 Flashcards</button>
+    <button class="tab" onclick="show('quiz')">🎯 Quiz</button>
+  </div>
+</header>
+
+<!-- VOCABULARY -->
+<div id="vocab" class="section active">
+  <div class="card">
+    <h2>🏫 School Places / Lugares de la escuela</h2>
+    <p style="font-size:0.85rem;color:#888;margin-bottom:10px;">Hacé clic en cada palabra para ver la traducción · Click each word to flip!</p>
+    <div class="vocab-grid" id="places-grid"></div>
+  </div>
+  <div class="card">
+    <h2>🎒 School Objects / Objetos escolares</h2>
+    <div class="vocab-grid" id="objects-grid"></div>
+  </div>
+</div>
+
+<!-- GRAMMAR -->
+<div id="grammar" class="section">
+  <div class="card">
+    <h2>👆 Demonstrative Pronouns</h2>
+    <p style="font-size:0.9rem;margin-bottom:8px;">Usamos <b>this/these</b> para cosas <b>cerca</b> 📍 y <b>that/those</b> para cosas <b>lejos</b> 🏔️</p>
+    <table>
+      <tr><th></th><th>Singular</th><th>Plural</th></tr>
+      <tr><td>📍 Cerca / Near</td><td class="highlight">THIS</td><td class="highlight">THESE</td></tr>
+      <tr><td>🏔️ Lejos / Far</td><td class="highlight">THAT</td><td class="highlight">THOSE</td></tr>
+    </table>
+    <h3>Examples / Ejemplos:</h3>
+    <div class="example">📍 <span>This</span> is my pencil. → Este es mi lápiz. (cerca)</div>
+    <div class="example">📍 <span>These</span> are my books. → Estos son mis libros. (cerca)</div>
+    <div class="example">🏔️ <span>That</span> is the library. → Esa es la biblioteca. (lejos)</div>
+    <div class="example">🏔️ <span>Those</span> are the classrooms. → Esas son las aulas. (lejos)</div>
+    <div class="tip"><strong>⚡ Truco:</strong> THIS → THESE (cerca, agrego S para plural)<br>THAT → THOSE (lejos, cambia todo para plural)</div>
+  </div>
+
+  <div class="card">
+    <h2>🧑‍🤝‍🧑 Possessive Adjectives</h2>
+    <p style="font-size:0.9rem;margin-bottom:8px;">Muestran a quién pertenece algo / Show who something belongs to.</p>
+    <table>
+      <tr><th>Pronoun</th><th>Possessive</th><th>Meaning</th></tr>
+      <tr><td>I</td><td class="highlight">MY</td><td>mi / mis</td></tr>
+      <tr><td>You</td><td class="highlight">YOUR</td><td>tu / tus</td></tr>
+      <tr><td>He</td><td class="highlight">HIS</td><td>su (de él)</td></tr>
+      <tr><td>She</td><td class="highlight">HER</td><td>su (de ella)</td></tr>
+      <tr><td>It</td><td class="highlight">ITS</td><td>su (de eso)</td></tr>
+      <tr><td>We</td><td class="highlight">OUR</td><td>nuestro/a</td></tr>
+      <tr><td>They</td><td class="highlight">THEIR</td><td>su (de ellos)</td></tr>
+    </table>
+    <h3>Examples / Ejemplos:</h3>
+    <div class="example"><span>My</span> bag is blue. → Mi mochila es azul.</div>
+    <div class="example"><span>Her</span> pencil case is on the desk. → Su cartuchera está en el escritorio.</div>
+    <div class="example"><span>Our</span> classroom is big. → Nuestra aula es grande.</div>
+    <div class="example"><span>Their</span> books are in the library. → Sus libros están en la biblioteca.</div>
+    <div class="tip"><strong>⚡ Truco:</strong> El possessive adjective NO cambia si hay 1 o muchas cosas.<br><i>My book / My books</i> → siempre MY</div>
+  </div>
+</div>
+
+<!-- FLASHCARDS -->
+<div id="flashcards" class="section">
+  <div class="card">
+    <h2>🃏 Flashcards</h2>
+    <p style="font-size:0.85rem;color:#888;margin-bottom:14px;">Hacé clic en la carta para darla vuelta · Click the card to flip it!</p>
+    <div class="flashcard-container">
+      <div class="flashcard" id="fc" onclick="flipFC()">
+        <div class="card-face front" id="fc-front">
+          <span class="big" id="fc-emoji"></span>
+          <span id="fc-en"></span>
+        </div>
+        <div class="card-face back" id="fc-back">
+          <span id="fc-es"></span>
+        </div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button onclick="fcMove(-1)">← Prev</button>
+      <span class="fc-count" id="fc-count"></span>
+      <button onclick="fcMove(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="section">
+  <div class="quiz-question">
+    <div class="score-text" id="score-text">Puntos / Score: 0 / 0</div>
+    <div class="score-bar"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
+    <p class="q-text" id="q-text">¡Listo para el quiz? / Ready for the quiz?</p>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn" id="next-btn" onclick="nextQuestion()">¡Empezar! / Start!</button>
+  </div>
+</div>
+
+<script>
+// DATA
+const places = [
+  {en:"classroom",es:"aula / salón",emoji:"🏫"},
+  {en:"library",es:"biblioteca",emoji:"📚"},
+  {en:"cafeteria",es:"cafetería / comedor",emoji:"🍽️"},
+  {en:"gym",es:"gimnasio",emoji:"🏋️"},
+  {en:"playground",es:"patio",emoji:"⛹️"},
+  {en:"bathroom",es:"baño",emoji:"🚿"},
+  {en:"office",es:"oficina",emoji:"🗂️"},
+  {en:"hall",es:"pasillo",emoji:"🚪"},
+];
+const objects = [
+  {en:"pencil",es:"lápiz",emoji:"✏️"},
+  {en:"pen",es:"lapicera",emoji:"🖊️"},
+  {en:"book",es:"libro",emoji:"📖"},
+  {en:"notebook",es:"cuaderno",emoji:"📓"},
+  {en:"ruler",es:"regla",emoji:"📏"},
+  {en:"rubber",es:"goma de borrar",emoji:"🧹"},
+  {en:"pencil case",es:"cartuchera",emoji:"🎒"},
+  {en:"school bag",es:"mochila",emoji:"🎒"},
+  {en:"scissors",es:"tijeras",emoji:"✂️"},
+  {en:"glue",es:"pegamento",emoji:"🧴"},
+  {en:"desk",es:"escritorio / banco",emoji:"🪑"},
+  {en:"chair",es:"silla",emoji:"🪑"},
+];
+
+const allVocab = [...places, ...objects];
+
+// Build vocab grids
+function buildGrid(items, id) {
+  const g = document.getElementById(id);
+  items.forEach((it, i) => {
+    const d = document.createElement('div');
+    d.className = 'vocab-item';
+    d.innerHTML = `<span class="emoji">${it.emoji}</span><div class="en">${it.en}</div><div class="es" id="es-${id}-${i}" style="display:none">${it.es}</div>`;
+    d.onclick = () => {
+      d.classList.toggle('flipped');
+      const es = document.getElementById(`es-${id}-${i}`);
+      es.style.display = es.style.display === 'none' ? 'block' : 'none';
+    };
+    g.appendChild(d);
+  });
+}
+buildGrid(places, 'places-grid');
+buildGrid(objects, 'objects-grid');
+
+// TABS
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if(id==='flashcards') renderFC();
+}
+
+// FLASHCARDS
+const fcData = [
+  ...allVocab.map(v=>({q:v.en, a:v.es, emoji:v.emoji, type:'vocab'})),
+  {q:'THIS (singular, near)', a:'Este / Esta / Esto\n📍 cerca', emoji:'👆', type:'gram'},
+  {q:'THESE (plural, near)', a:'Estos / Estas\n📍 cerca', emoji:'👆', type:'gram'},
+  {q:'THAT (singular, far)', a:'Ese / Esa / Eso\n🏔️ lejos', emoji:'↗️', type:'gram'},
+  {q:'THOSE (plural, far)', a:'Esos / Esas\n🏔️ lejos', emoji:'↗️', type:'gram'},
+  {q:'MY', a:'mi / mis', emoji:'🙋', type:'poss'},
+  {q:'YOUR', a:'tu / tus', emoji:'🙋', type:'poss'},
+  {q:'HIS', a:'su (de él)', emoji:'👦', type:'poss'},
+  {q:'HER', a:'su (de ella)', emoji:'👧', type:'poss'},
+  {q:'OUR', a:'nuestro / nuestra', emoji:'👫', type:'poss'},
+  {q:'THEIR', a:'su (de ellos)', emoji:'👥', type:'poss'},
+];
+
+let fcIdx = 0;
+function renderFC() {
+  const it = fcData[fcIdx];
+  document.getElementById('fc').classList.remove('flipped');
+  document.getElementById('fc-emoji').textContent = it.emoji;
+  document.getElementById('fc-en').textContent = it.q;
+  document.getElementById('fc-es').textContent = it.a;
+  document.getElementById('fc-count').textContent = `${fcIdx+1} / ${fcData.length}`;
+}
+function flipFC() { document.getElementById('fc').classList.toggle('flipped'); }
+function fcMove(d) { fcIdx = (fcIdx + d + fcData.length) % fcData.length; renderFC(); }
+
+// QUIZ
+const quizData = [
+  // Vocab
+  ...allVocab.map(v => ({
+    q: `${v.emoji} ¿Cómo se dice "${v.es}" en inglés?`,
+    a: v.en,
+    opts: shuffle([v.en, ...getOtherVocab(v.en, 3)])
+  })),
+  // Demonstratives
+  {q:'📍 Hay UN libro cerca. Completá: ___ is my book.', a:'This', opts:['This','These','That','Those']},
+  {q:'📍 Hay DOS lápices cerca. Completá: ___ are my pencils.', a:'These', opts:['This','These','That','Those']},
+  {q:'🏔️ Hay UN aula lejos. Completá: ___ is the classroom.', a:'That', opts:['This','These','That','Those']},
+  {q:'🏔️ Hay DOS libros lejos. Completá: ___ are the books.', a:'Those', opts:['This','These','That','Those']},
+  // Possessives
+  {q:'I have a pencil. Completá: ___ pencil is yellow.', a:'My', opts:['My','Your','His','Her']},
+  {q:'She has a book. Completá: ___ book is red.', a:'Her', opts:['My','His','Her','Our']},
+  {q:'He has a bag. Completá: ___ bag is big.', a:'His', opts:['My','His','Her','Their']},
+  {q:'We have a classroom. Completá: ___ classroom is big.', a:'Our', opts:['My','Your','Our','Their']},
+  {q:'They have books. Completá: ___ books are on the desk.', a:'Their', opts:['Our','Your','Their','His']},
+];
+
+function getOtherVocab(exclude, n) {
+  return shuffle(allVocab.map(v=>v.en).filter(e=>e!==exclude)).slice(0,n);
+}
+function shuffle(a) { return [...a].sort(()=>Math.random()-0.5); }
+
+let qIdx = -1, score = 0, total = 0, answered = false;
+const shuffledQ = shuffle(quizData);
+
+function nextQuestion() {
+  if(answered || qIdx===-1) {
+    qIdx++;
+    if(qIdx >= shuffledQ.length) qIdx = 0;
+    answered = false;
+    const q = shuffledQ[qIdx];
+    document.getElementById('q-text').textContent = q.q;
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('feedback').className = 'feedback';
+    const optsDiv = document.getElementById('options');
+    optsDiv.innerHTML = '';
+    shuffle(q.opts).forEach(opt => {
+      const b = document.createElement('button');
+      b.className = 'opt-btn';
+      b.textContent = opt;
+      b.onclick = () => checkAnswer(opt, q.a);
+      optsDiv.appendChild(b);
+    });
+    document.getElementById('next-btn').textContent = 'Siguiente / Next →';
+    document.getElementById('next-btn').disabled = true;
+  }
+}
+
+function checkAnswer(chosen, correct) {
+  if(answered) return;
+  answered = true;
+  total++;
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach(b => {
+    b.disabled = true;
+    if(b.textContent === correct) b.classList.add('correct');
+    else if(b.textContent === chosen) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('feedback');
+  if(chosen === correct) {
+    score++;
+    fb.textContent = '¡Genial! 🌟 Correct!';
+    fb.className = 'feedback ok';
+  } else {
+    fb.textContent = `❌ Era: ${correct}`;
+    fb.className = 'feedback no';
+  }
+  document.getElementById('score-text').textContent = `Puntos / Score: ${score} / ${total}`;
+  document.getElementById('score-fill').style.width = `${Math.round(score/total*100)}%`;
+  document.getElementById('next-btn').disabled = false;
+}
+
+renderFC();
+</script>
+</body>
+</html>
